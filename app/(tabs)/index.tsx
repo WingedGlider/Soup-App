@@ -2,7 +2,6 @@ import { useRouter } from "expo-router";
 import {View,Text,StyleSheet,Pressable,ScrollView,} from "react-native";
 
 export default function Index() {
-
   const router = useRouter();
   function touchnewCourse() {
     router.push({
@@ -53,7 +52,7 @@ export default function Index() {
               nextWeek.setDate(now.getDate() + 7);
               const due = new Date(a.due);
               return due >= now && due <= nextWeek;
-            })
+            }).sort((a, b) => new Date(a.due).getTime() - new Date(b.due).getTime())
             .map(a => ({...a,fullName: `${course.name}: ${a.name}`})).map((assignment, index) => (
             <Pressable key={index} onPress={() => touchassign(course.name, assignment.name)} style={styles.item}>
               <Text style={styles.itemtext} selectable={false}>{assignment.fullName}</Text>
@@ -73,7 +72,7 @@ export default function Index() {
               nextMonth.setDate(now.getDate() + 30);
               const due = new Date(a.due);
               return due >= now && due <= nextMonth;
-            })
+            }).sort((a, b) => new Date(a.due).getTime() - new Date(b.due).getTime())
             .map(a => ({...a,fullName: `${course.name}: ${a.name}`})).map((assignment, index) => (
             <Pressable key={index} onPress={() => touchassign(course.name, assignment.name)} style={styles.item}>
               <Text style={styles.itemtext} selectable={false}>{assignment.fullName}</Text>
@@ -254,37 +253,50 @@ export const styles = StyleSheet.create({
     width: 25,
     height: 25,
     textAlign: 'center',
-  }
+  },
+  dropdownitem:{
+      padding: 10,
+      marginRight: 8,
+      backgroundColor: '#121725',
+      borderRadius: 5,
+    },
+  dropdowntext: {
+    color: 'white',
+    fontSize: 15,
+    margin:5,
+  },
+  dropdownselect: {
+    backgroundColor: "#23395D",
+    borderWidth: 3,
+    borderColor:  "#4c6b8a",
+  },
 });
 
 interface Semester{
-  name: String; //Assigned via current date: August - December = Fall; January - first 10 days of May = Spring; Latter part of May - July = Summer;
+  name: String;
   courses: Course[]; 
 }
 
 interface Course{
-  name: String; // Assigned in course creation
-  identifier: String; // Assigned in course creation
+  name: String; 
+  identifier: String;
   grade: number; // Assigned by grades/weights of each category. HERE [How is the logic determined?]
   categories: Category[]
 }
 
 interface Category{
-  name: String; // Assigned in the course page when adding a new category
+  name: String; 
   grade: number; //calculated by all the grade of all assignments in the category. HERE [logic]
-  weight: number; //Assigned in the course page when adding a new category, indicates what percentage of the course grade the category makes up
+  weight: number;
   assignments: Assignment[]; 
 }
 
 interface Assignment{
-  name: String; // Assigned by user in assignment creation
-  due: Date; // Assigned by user in assignment creation, informs the date the assignment is due
-  value: number; // Assigned by user in assignment creation, informs how much the assignment is worth to the category
-  grade: number;// Assigned by user in assignment creation, gives a percentage value for the assignment
+  name: String;
+  due: Date;
+  value: number;
+  grade: number;
 }
-
-// I need to be able to add new courses to the semester, new categories to each course, and new assignments to each category. I need to be able to update and change
-// all data that is not determined by other data.
 
 export function getLetter(grade: number){
   if (grade >= 97) return "A+";
@@ -303,7 +315,7 @@ export function getLetter(grade: number){
 }
 
 export const thisSemester: Semester = {
-  name: "Spring",
+  name: "Spring 2025",
   courses: [
     {
       name: "2D Design",

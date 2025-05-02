@@ -116,8 +116,7 @@ export default function CourseForm(_: Props) {
   return (
     <View style={styles.page}>
       <View style={styles.container}>
-        <Text selectable={false} style={styles.coursetext}>Course Creation Page</Text>
-
+        <Text selectable={false} style={styles.coursetext}>Course Creation</Text>
         <View style={styles.form}>
           <Text selectable={false} style={styles.inputtext}>Course Name</Text>
           <TextInput
@@ -126,7 +125,6 @@ export default function CourseForm(_: Props) {
             onChangeText={setName}
             placeholder="Course Name"
           />
-
           <Text selectable={false} style={styles.inputtext}>Course Identifier</Text>
           <TextInput
             style={styles.input}
@@ -134,7 +132,6 @@ export default function CourseForm(_: Props) {
             onChangeText={setIdentifier}
             placeholder="e.g. CS101"
           />
-
           <Text selectable={false} style={styles.inputtext}>New Category Name</Text>
           <TextInput
             style={styles.input}
@@ -142,7 +139,6 @@ export default function CourseForm(_: Props) {
             onChangeText={setNewCategoryName}
             placeholder="e.g. Homework, Quizzes"
           />
-
           <Text style={styles.inputtext}>New Category Weight (%)</Text>
           <TextInput
             style={styles.input}
@@ -151,13 +147,10 @@ export default function CourseForm(_: Props) {
             placeholder="e.g 30"
             keyboardType="numeric"
           />
-
           {error ? <Text style={{ color: 'red', marginBottom: 10 }}>{error}</Text> : null}
-
           <Pressable style={styles.formbutton} onPress={addCategory}>
             <Text selectable={false} style={styles.formbuttontext}>Add Category</Text>
           </Pressable>
-
           <FlatList
             data={categories}
             keyExtractor={(item, index) => `${item.name}-${index}`}
@@ -172,7 +165,6 @@ export default function CourseForm(_: Props) {
               </View>
             )}
           />
-
           <Pressable style={styles.formbutton} onPress={submitCourse}>
             <Text style={styles.formbuttontext} selectable={false}>Create Course</Text>
           </Pressable>

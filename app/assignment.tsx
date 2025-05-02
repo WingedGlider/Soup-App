@@ -8,7 +8,7 @@ export default function Calendar() {
   
   const { blank, query } = useLocalSearchParams();
   const id = query;
-  const [course, assign] = (id as string).split('`');
+  const [course, assign] = (id as string).split(' ` ');
 
   return (
     <View style = {styles.page}>
